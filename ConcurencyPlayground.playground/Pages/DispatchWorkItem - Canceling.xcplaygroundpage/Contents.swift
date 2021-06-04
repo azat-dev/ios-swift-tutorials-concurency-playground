@@ -1,14 +1,13 @@
 //: [Previous](@previous)
 
 import Foundation
-import UIKit
 import PlaygroundSupport
 
 PlaygroundPage.current.needsIndefiniteExecution = true
 
 var workItem: DispatchWorkItem?
 
-workItem = DispatchWorkItem() {
+workItem = DispatchWorkItem {
     var count = 0
     
     while true {

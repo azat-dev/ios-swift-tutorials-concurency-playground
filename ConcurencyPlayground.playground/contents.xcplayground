@@ -2,6 +2,7 @@
 <playground version='6.0' target-platform='ios' buildActiveScheme='true' importAppTypes='true'>
     <pages>
         <page name='DispatchQueue'/>
-        <page name='DispatchWorkItem'/>
+        <page name='DispatchWorkItem - Canceling'/>
+        <page name='DispatchWorkItem - Completion Handler'/>
     </pages>
 </playground>
