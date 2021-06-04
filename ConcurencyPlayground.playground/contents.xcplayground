@@ -5,5 +5,6 @@
         <page name='DispatchWorkItem - Canceling'/>
         <page name='DispatchWorkItem - Completion Handler'/>
         <page name='DispatchGroup - Async completion handler'/>
+        <page name='DispatchGroup - Blocking completion handler'/>
     </pages>
 </playground>
