@@ -35,51 +35,51 @@ let urls = loadUrls()
 print("Urls: \(urls.count)")
 
 func downloadImages(urls: [URL]) -> [UIImage] {
-    let maxNumberofActiveRequests = 5
+    let requestsSemaphore = DispatchSemaphore(value: 5)
+    let imagesSemaphore = DispatchSemaphore(value: 1)
     var images = [UIImage?]()
     let group = DispatchGroup()
     
-    func downloadImage(url: URL) -> UIImage? {
-        defer {
-            group.leave()
-        }
+    func appendDownloadedImage(_ image: UIImage) {
+        defer { imagesSemaphore.signal() }
         
+        imagesSemaphore.wait()
+        images.append(image)
+    }
+    
+    func downloadImage(url: URL) -> UIImage? {
         guard let data = try? Data(contentsOf: url) else {
-            print("Can't download image: \(url)")
             return nil
         }
         
         return UIImage(data: data)
     }
     
-    
-    var numberOfActiveRequests = 0
-    
     for (index, url) in urls.enumerated() {
-        if numberOfActiveRequests == 0 {
-            print("\nStart new group\n")
+        if index % 5 == 0 {
+           print("\nNew group\n")
         }
         
-        let isLast = index == urls.count - 1
+        requestsSemaphore.wait()
         
-        print("Push to queue image loading: \(index)")
-        
+        print("Push image loading to queue: \(index)")
         DispatchQueue.global(qos: .utility).async(group: group) {
-            group.enter()
+            defer {
+                requestsSemaphore.signal()
+            }
+            
             print("Start image loading: \(index)")
-            let image = downloadImage(url: url)
+            guard let image = downloadImage(url: url) else {
+                print("Failed to load image: \(index)")
+                return
+            }
+            
+            appendDownloadedImage(image)
             print("Image loaded: \(index)")
-            images.append(image)
-        }
-        
-        numberOfActiveRequests += 1
-        
-        if numberOfActiveRequests == maxNumberofActiveRequests || isLast {
-            print("\nWaiting to load group: \(numberOfActiveRequests)\n")
-            group.wait()
-            numberOfActiveRequests = 0
         }
     }
+    
+    group.wait()
     
     return images.compactMap { $0 }
 }
