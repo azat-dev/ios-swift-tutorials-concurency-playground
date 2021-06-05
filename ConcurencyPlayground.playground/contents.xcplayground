@@ -8,7 +8,8 @@
         <page name='DispatchGroup - Blocking completion handler'/>
         <page name='Images - Exercise'/>
         <page name='BlockOperation'/>
-        <page name='Operation'/>
-        <page name='OperationQueue'/>
+        <page name='Operation - Subclassing'/>
+        <page name='OperationQueue - Adding operations'/>
+        <page name='OperationQueue - Pausing'/>
     </pages>
 </playground>

@@ -11,6 +11,7 @@ class MyOperation: Operation {
     
     init(id: String) {
         self.id = id
+        super.init()
     }
     
     override func main() {

@@ -10,6 +10,7 @@ class MyOperation: Operation {
     
     init(id: String) {
         self.id = id
+        super.init()
     }
     
     override func main() {
@@ -21,7 +22,10 @@ class MyOperation: Operation {
 
 
 let operation = MyOperation(id: "1")
+
+print("Block the currrent thread untill it the operation won't be finished\n")
 operation.start()
+print("\nThe operation is finished")
 
 PlaygroundPage.current.finishExecution()
 
