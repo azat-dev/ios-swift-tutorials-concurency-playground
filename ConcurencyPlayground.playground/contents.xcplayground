@@ -7,5 +7,6 @@
         <page name='DispatchGroup - Async completion handler'/>
         <page name='DispatchGroup - Blocking completion handler'/>
         <page name='Images - Exercise'/>
+        <page name='BlockOperation'/>
     </pages>
 </playground>
