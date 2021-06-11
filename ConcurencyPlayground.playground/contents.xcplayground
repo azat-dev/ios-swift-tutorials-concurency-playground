@@ -11,5 +11,6 @@
         <page name='Operation - Subclassing'/>
         <page name='OperationQueue - Adding operations'/>
         <page name='OperationQueue - Pausing'/>
+        <page name='Operation - Dependencies'/>
     </pages>
 </playground>
