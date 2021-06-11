@@ -35,8 +35,13 @@ class AsyncOperation: Operation {
     }
     
     override func start() {
-      main()
-      state = .executing
+        if isCancelled {
+            state = .finished
+            return
+        }
+        
+        main()
+        state = .executing
     }
 }
 
@@ -113,7 +118,7 @@ class DownloadImageOperation: Operation, ImageDataProvider {
             
             url = listItemUrl
         }
-
+        
         print("Start image download")
         print("URL: \(url)")
         guard let data = try? Data(contentsOf: url) else {
@@ -150,7 +155,7 @@ class ImageEffectOperation: Operation {
             inputImage = dependencyImage
         }
         
-
+        
         guard
             let filter = CIFilter(name: "CITwirlDistortion")
         else {
@@ -196,6 +201,7 @@ print("Wait for all operations")
 queue.waitUntilAllOperationsAreFinished()
 print("All operations finished")
 
+queue.cancelAllOperations()
 PlaygroundPage.current.finishExecution()
 
 //: [Next](@next)
